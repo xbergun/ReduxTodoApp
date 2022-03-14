@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { todosInitialState } from "./todosInitialState";
-
+import {RootState} from '../store'
 
 const todosTitle = "todos"
 
@@ -32,5 +32,20 @@ export const todosSlice = createSlice({
     }
 });
 
+
+export const selectTodos = (state :RootState) => state.todos.items
+export const selectFilteredTodos = (state:RootState) => {
+    if (state.todos.activeFilter === "all") {
+        return state.todos.items;
+    }
+    return state.todos.items.filter(item => {
+        return state.todos.activeFilter === "completed" ? item.completed : !item.completed;
+    });
+        
+    
+
+}
+
+export const selectActiveFilter = (state:RootState) => state.todos.activeFilter
 export const { addTodo ,toggle,removeTodo,changeActiveFilter,clearCompleted} = todosSlice.actions;
 export default todosSlice.reducer
