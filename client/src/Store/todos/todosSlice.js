@@ -1,69 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {  } from "../store";
+import { createSlice } from "@reduxjs/toolkit";
+import {getTodosAsync, addTodoAsync, toggleTodoAsync,deleteTodoAsync} from "./todosThunk";
 import { todosInitialState } from "./todosInitialState";
-import { RootState } from "../store";
-import axios from "axios";
+import { todosReducers } from "./todosReducers";
 const todosTitle = "todos";
 
-export const getTodosAsync = createAsyncThunk(
-  "todos/getTodosAsync",
-  async () => {
-    const res = await axios(`${process.env.REACT_APP_API_BASE_ENDPOINT}/todos`);
-    return res.data;
-  }
-);
-export const addTodoAsync = createAsyncThunk(
-  "todos/addTodoAsync",
-  async (title) => {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_BASE_ENDPOINT}/todos`,
-      title
-    );
-    return res.data;
-  }
-);
 
-export const toggleTodoAsync = createAsyncThunk(
-  "todos/toggleTodoAsync",
-  async ({ id, data }) => {
-    const res = await axios.patch(
-      `${process.env.REACT_APP_API_BASE_ENDPOINT}/todos/${id}`,
-      data
-    );
-    return res.data;
-  }
-);
-
-export const deleteTodoAsync = createAsyncThunk(
-  "todos/deleteTodoAsync",
-  async ({ id }) => {
-    const res= await axios.delete(
-      `${process.env.REACT_APP_API_BASE_ENDPOINT}/todos/${id}`
-    );
-    return res.data
-  }
-);
 
 export const todosSlice = createSlice({
   name: todosTitle,
   initialState: todosInitialState,
-  reducers: {
-    // toggle : (state, action) => {
-    //     const {id} = action.payload;
-    //     const item = state.items.find(item => item.id === id);
-    //     item.completed = !item.completed;
-    // },
-    // removeTodo: (state, action) => {
-    //   const id = action.payload;
-    //   const itemIndex = state.items.findIndex((item) => item.id === id);
-    //   state.items.splice(itemIndex, 1);
-    // },
-    changeActiveFilter: (state, action) => {
-      state.activeFilter = action.payload;
-    },
-    clearCompleted: (state) => {
-      state.items = state.items.filter((item) => !item.completed);
-    },
-  },
+  reducers: todosReducers,
   extraReducers: {
     //! Get todo
     [getTodosAsync.pending]: (state, action) => {

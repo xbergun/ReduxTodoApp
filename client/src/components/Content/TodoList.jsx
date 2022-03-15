@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
-  toggle,
-  removeTodo,
-  selectFilteredTodos,
+ 
+  
   getTodosAsync,
   toggleTodoAsync,
   deleteTodoAsync
-} from "../../Store/todos/todosSlice";
+} from "Store/todos/todosThunk";
+import { selectFilteredTodos } from "Store/todos/todosSlice";
 import { useEffect } from "react";
 import Loading from "components/Loading/Loading";
 import Error from "components/Error/Error";
