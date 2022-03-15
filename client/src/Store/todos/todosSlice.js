@@ -97,7 +97,7 @@ export const todosSlice = createSlice({
       state.items[index].completed = completed;
     },
     [toggleTodoAsync.pending]: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
     },
     [toggleTodoAsync.rejected]: (state, action) => {
       state.isLoading = false;
